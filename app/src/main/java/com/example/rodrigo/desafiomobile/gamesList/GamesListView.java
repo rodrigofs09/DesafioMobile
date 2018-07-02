@@ -5,7 +5,9 @@ import com.example.rodrigo.desafiomobile.entity.GamesEntity;
 import java.util.List;
 
 public interface GamesListView {
-    void updateList(List<GamesEntity> gamesList);
+    void updateList(List<GamesEntity> gamesLista);
+
+    void AddListRecycler();
 
     void showMessage(String msg);
     void showLoading();

@@ -6,4 +6,5 @@
 
     <color name="white">#FFFFFF</color>
     <color name="alpha_black">#80000000</color>
+    <color name="cloud_burst">#213449</color>
 </resources>

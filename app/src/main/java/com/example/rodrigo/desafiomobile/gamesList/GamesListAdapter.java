@@ -17,30 +17,31 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnLongClick;
 
-public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.ViewHolder>{
+public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.GamesViewHolder> {
 
     private List<GamesEntity> gamesList;
-    OnRecyclerViewSelected onRecyclerViewSelected;
     private Context context;
 
+    OnRecyclerViewSelected onRecyclerViewSelected;
+
     // Construtor que recebe a lista
-    GamesListAdapter(List<GamesEntity> gamesList, Context context) {
+    GamesListAdapter(List<GamesEntity> gamesList, Context context ) {
         this.gamesList = gamesList;
         this.context = context;
     }
 
+
     // Infla o componente view
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GamesViewHolder onCreateViewHolder (ViewGroup parent,int viewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.games_item_list, parent, false);
-        return new ViewHolder(v);
+        return new GamesViewHolder(v);
     }
 
     // Seta os dados nas views
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder ( final GamesViewHolder holder, final int position){
         GamesEntity gamesEntity = gamesList.get(position);
         holder.txGameName.setText(gamesEntity.getName());
         Picasso.with(context)
@@ -52,12 +53,12 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.View
 
     // Retorna o tamanho da lista
     @Override
-    public int getItemCount() {
+    public int getItemCount () {
         return gamesList.size();
     }
 
     // Mapeamento dos componentes da view
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class GamesViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tx_game_name)
         TextView txGameName;
@@ -65,31 +66,22 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.View
         @BindView(R.id.image_view_background)
         ImageView imgBackgroud;
 
-        public ViewHolder(View itemView) {
+        public GamesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
         // Seta o clique rápido
         @OnClick(R.id.container)
-        void onItemClick(View view){
-            if(onRecyclerViewSelected != null)
+        void onItemClick(View view) {
+            if (onRecyclerViewSelected != null)
                 onRecyclerViewSelected.onClick(view, getAdapterPosition());
 
         }
 
-        // Seta o clique longo
-        @OnLongClick(R.id.container)
-        boolean onLongItemClick(View view){
-            if(onRecyclerViewSelected != null)
-                onRecyclerViewSelected.onLongClick(view, getAdapterPosition());
-
-            return true;
-        }
-
     }
 
-    public void setOnRecyclerViewSelected(OnRecyclerViewSelected onRecyclerViewSelected){
+    public void setOnRecyclerViewSelected (OnRecyclerViewSelected onRecyclerViewSelected){
         this.onRecyclerViewSelected = onRecyclerViewSelected;
     }
 }
