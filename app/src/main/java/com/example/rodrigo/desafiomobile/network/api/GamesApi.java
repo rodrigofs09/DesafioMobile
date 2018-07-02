@@ -11,10 +11,17 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Relaciona retrofit e json, traduzindo o arquivo json em um objeto java
+ */
 public class GamesApi {
     private static GamesApi instance;
     private GamesService gamesService;
 
+    /**
+     * construtor de instancia
+     * @return instancia contendo a informacoes da api de games
+     */
     public static GamesApi getInstance(){
         if(instance == null){
             instance = new GamesApi();
@@ -23,6 +30,9 @@ public class GamesApi {
         return instance;
     }
 
+    /**
+     * Construtor que cria o retrofit
+     */
     private GamesApi(){
         Retrofit retrofit = new Retrofit
                 .Builder()
@@ -34,6 +44,10 @@ public class GamesApi {
 
     }
 
+    /**
+     * funcao para criar gson
+     * @return gson a ser adicionado ao retrofit
+     */
     private Converter.Factory defaultConvertFactory() {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
@@ -41,6 +55,10 @@ public class GamesApi {
         return GsonConverterFactory.create(gson);
     }
 
+    /**
+     * função para pegar a partir do serviço os jogos e suas informações
+     * @return jogos com suas informações
+     */
     public Call<GamesListEntity> getGames(){
         return gamesService.getGames();
     }

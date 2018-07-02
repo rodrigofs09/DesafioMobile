@@ -1,5 +1,7 @@
 package com.example.rodrigo.desafiomobile.gamesList;
 
+import android.support.annotation.NonNull;
+
 import com.example.rodrigo.desafiomobile.entity.GamesListEntity;
 import com.example.rodrigo.desafiomobile.network.api.GamesApi;
 
@@ -17,6 +19,7 @@ public class GamesListPresenter {
         this.gamesListView = gamesListView;
     }
 
+    // Atualiza informações da lista de jogos
     void updateList(){
 
         gamesListView.showLoading();
@@ -25,7 +28,7 @@ public class GamesListPresenter {
 
         gamesApi.getGames().enqueue(new Callback<GamesListEntity>() {
             @Override
-            public void onResponse(Call<GamesListEntity> call, Response<GamesListEntity> response) {
+            public void onResponse(@NonNull Call<GamesListEntity> call, @NonNull Response<GamesListEntity> response) {
                 GamesListEntity gameListEntity = response.body();
                 if(gameListEntity != null){
                     gamesListView.updateList(gameListEntity.getGames());
@@ -36,7 +39,7 @@ public class GamesListPresenter {
             }
 
             @Override
-            public void onFailure(Call<GamesListEntity> call, Throwable t) {
+            public void onFailure(@NonNull Call<GamesListEntity> call, @NonNull Throwable t) {
                 gamesListView.hideLoading();
                 gamesListView.showMessage("Falha ao acessar servidor");
             }

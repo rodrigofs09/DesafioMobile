@@ -14,32 +14,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/image_view_header"
+            <fragment
+                android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
+                android:id="@+id/youtube_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:contentDescription="@null" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/image_view_header"
-                android:contentDescription="@null"
-                android:src="@drawable/sombra"
-                android:scaleType="fitXY" />
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/text_view_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/image_view_header"
+                android:layout_below="@+id/youtube_fragment"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-medium"
                 android:textAllCaps="true"
                 android:textColor="@color/white"
-                android:textSize="19sp" />
+                android:textSize="19sp"
+                tools:targetApi="jelly_bean" />
 
             <TextView
                 android:id="@+id/gameData"
@@ -51,7 +44,8 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-light"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:targetApi="jelly_bean" />
 
             <TextView
                 android:id="@+id/gamePlataformas"
@@ -63,14 +57,10 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-light"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:targetApi="jelly_bean" />
 
         </RelativeLayout>
-
-        <com.google.android.youtube.player.YouTubePlayerView
-            android:id="@+id/youtube_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
     </ScrollView>
 

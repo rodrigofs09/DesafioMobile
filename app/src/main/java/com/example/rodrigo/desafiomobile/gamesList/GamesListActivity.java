@@ -24,9 +24,11 @@ import com.example.rodrigo.desafiomobile.gamesListDetail.GamesDetailActivity;
 
 public class GamesListActivity extends AppCompatActivity implements GamesListView{
 
+    // Bind do xml com a activity pelo ButterKnife
     @BindView(R.id.rv_games)
     RecyclerView rv_games;
 
+    // Tela de progresso
     @BindView(R.id.linear_layout_loading)
     LinearLayout loadingLayout;
 
@@ -36,6 +38,7 @@ public class GamesListActivity extends AppCompatActivity implements GamesListVie
 
     private List<GamesEntity> gamesList;
 
+    // Variável para armazenar informações dos jogos do json e enviar para a activity de detalhes
     public final static String EXTRA = "game";
 
     @Override
@@ -45,23 +48,27 @@ public class GamesListActivity extends AppCompatActivity implements GamesListVie
 
         ButterKnife.bind(this);
 
+        // array para armazenar dados
         gamesList = new ArrayList<>();
 
+        // Seta o adapter na recycler view
         rv_games.setAdapter(new GamesListAdapter(gamesList, this));
         rv_games.setLayoutManager(new LinearLayoutManager(this));
 
+        // presenter atualiza informações da activity
         gamesListPresenter = new GamesListPresenter(this);
         gamesListPresenter.updateList();
 
     }
 
+    // Cria lista do recycler view evitando o erro do recycler view null
     @Override
     public void AddListRecycler() {
         gamesListAdapter = new GamesListAdapter(gamesList, this);
         gamesListAdapter.setOnRecyclerViewSelected(new OnRecyclerViewSelected(){
             @Override
             public void onClick(View view, int position){
-                // Trata o clique
+                // Trata o clique e envia informação do jogo selecionado para a próxima activity
                 Intent intent = new Intent(GamesListActivity.this, GamesDetailActivity.class);
                 intent.putExtra(EXTRA, gamesList.get(position));
                 startActivity(intent);
@@ -70,6 +77,7 @@ public class GamesListActivity extends AppCompatActivity implements GamesListVie
 
         rv_games.setAdapter(gamesListAdapter);
 
+        // Criação do gerenciador de layouts
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, layoutManager.getOrientation());
         rv_games.setLayoutManager(layoutManager);
@@ -81,10 +89,12 @@ public class GamesListActivity extends AppCompatActivity implements GamesListVie
 
         gamesList = gamesLista;
 
+        // Seta adapter
         gamesListAdapter = new GamesListAdapter(gamesList, this);
         gamesListAdapter.setOnRecyclerViewSelected(new OnRecyclerViewSelected() {
             @Override
             public void onClick(View view, int position) {
+                // Vai para a activity de detalhes armazenando informações do jogo selecionado
                 Intent intent = new Intent(GamesListActivity.this, GamesDetailActivity.class);
                 intent.putExtra(EXTRA, gamesList.get(position));
                 startActivity(intent);
@@ -94,17 +104,20 @@ public class GamesListActivity extends AppCompatActivity implements GamesListVie
 
         rv_games.setAdapter(gamesListAdapter);
 
+        // Criação do gerenciador de layouts
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, layoutManager.getOrientation());
         rv_games.setLayoutManager(layoutManager);
         rv_games.addItemDecoration(dividerItemDecoration);
     }
 
+    // Exibe mensagens de erro
     @Override
     public void showMessage(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
+    // Trata tela de progresso
     @Override
     public void showLoading() {
         loadingLayout.setVisibility(View.VISIBLE);

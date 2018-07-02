@@ -1,6 +1,7 @@
 package com.example.rodrigo.desafiomobile.gamesList;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,7 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
     private List<GamesEntity> gamesList;
     private Context context;
 
-    OnRecyclerViewSelected onRecyclerViewSelected;
+    private OnRecyclerViewSelected onRecyclerViewSelected;
 
     // Construtor que recebe a lista
     GamesListAdapter(List<GamesEntity> gamesList, Context context ) {
@@ -33,15 +34,16 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
 
 
     // Infla o componente view
+    @NonNull
     @Override
-    public GamesViewHolder onCreateViewHolder (ViewGroup parent,int viewType){
+    public GamesViewHolder onCreateViewHolder (@NonNull ViewGroup parent, int viewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.games_item_list, parent, false);
         return new GamesViewHolder(v);
     }
 
     // Seta os dados nas views
     @Override
-    public void onBindViewHolder ( final GamesViewHolder holder, final int position){
+    public void onBindViewHolder (@NonNull final GamesViewHolder holder, final int position){
         GamesEntity gamesEntity = gamesList.get(position);
         holder.txGameName.setText(gamesEntity.getName());
         Picasso.with(context)
@@ -58,7 +60,7 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
     }
 
     // Mapeamento dos componentes da view
-    public class GamesViewHolder extends RecyclerView.ViewHolder {
+    class GamesViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tx_game_name)
         TextView txGameName;
@@ -66,7 +68,7 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
         @BindView(R.id.image_view_background)
         ImageView imgBackgroud;
 
-        public GamesViewHolder(View itemView) {
+        GamesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -81,6 +83,7 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
 
     }
 
+    // Seta clique
     public void setOnRecyclerViewSelected (OnRecyclerViewSelected onRecyclerViewSelected){
         this.onRecyclerViewSelected = onRecyclerViewSelected;
     }
