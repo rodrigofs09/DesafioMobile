@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.rodrigo.desafiomobile.R;
 import com.example.rodrigo.desafiomobile.entity.GamesEntity;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -46,10 +46,9 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
     public void onBindViewHolder (@NonNull final GamesViewHolder holder, final int position){
         GamesEntity gamesEntity = gamesList.get(position);
         holder.txGameName.setText(gamesEntity.getName());
-        Picasso.with(context)
+        Glide.with(context)
                 .load(gamesEntity.getImage())
                 .centerCrop()
-                .fit()
                 .into(holder.imgBackgroud);
     }
 
