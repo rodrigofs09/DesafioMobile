@@ -21,7 +21,7 @@ class GamesListActivity : AppCompatActivity(), GamesListView, OnRecyclerViewSele
         var game = "game"
     }
 
-    var gamesListPresenter: GamesListPresenter = GamesListPresenter(this)
+    private var gamesListPresenter: GamesListPresenter = GamesListPresenter(this)
 
     override fun onClick(gamesEntity: GamesEntity) {
         val intent = Intent(this, GamesDetailActivity::class.java)
@@ -29,7 +29,7 @@ class GamesListActivity : AppCompatActivity(), GamesListView, OnRecyclerViewSele
         startActivity(intent)
     }
 
-    lateinit var adapter: GamesListAdapter
+    private lateinit var adapter: GamesListAdapter
 
     override fun displayGames(gamesListEntity: GamesListEntity) {
         adapter.setData(gamesListEntity)
