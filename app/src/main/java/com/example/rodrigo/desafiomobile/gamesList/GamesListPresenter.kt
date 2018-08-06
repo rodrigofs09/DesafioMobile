@@ -6,7 +6,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class GamesListPresenter (var gamesListView: GamesListView) {
+class GamesListPresenter (private val gamesListView: GamesListView) {
 
     fun updateList() {
         gamesListView.showLoading()
@@ -15,6 +15,7 @@ class GamesListPresenter (var gamesListView: GamesListView) {
         call.enqueue(object : Callback<GamesListEntity?> {
             override fun onResponse(call: Call<GamesListEntity?>?,
                                     response: Response<GamesListEntity?>?) {
+
                 response?.body()?.let {
                     gamesListView.displayGames(it)
                 }

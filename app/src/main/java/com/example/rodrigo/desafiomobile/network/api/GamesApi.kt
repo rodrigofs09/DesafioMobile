@@ -10,5 +10,5 @@ class GamesApi {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    fun gamesService() = retrofit.create(GamesService::class.java)
+    fun gamesService(): GamesService = retrofit.create(GamesService::class.java)
 }

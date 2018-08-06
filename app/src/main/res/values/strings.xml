@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Desafio Mobile</string>
     <string name="detalhes">Detalhes</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_games_list_main">GamesListMainActivity</string>
 </resources>

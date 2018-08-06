@@ -14,13 +14,13 @@ import com.xwray.groupie.kotlinandroidextensions.ViewHolder
 import kotlinx.android.synthetic.main.games_item_list.view.*
 
 class GamesListAdapter(private val context: Context) : GroupAdapter<ViewHolder>() {
-
-        lateinit var onRecyclerViewSelected: OnRecyclerViewSelected
-
-        fun setData(gamesListEntity: GamesListEntity){
-            clear()
-            gamesListEntity.games.forEach { game -> add(GameItem(game)) }
-        }
+        var onRecyclerViewSelected: OnRecyclerViewSelected? = null
+        var data: GamesListEntity? = null
+            set(value) {
+                field = value
+                clear()
+                value?.games?.forEach { game -> add(GameItem(game)) }
+            }
 
         inner class GameItem(private val gamesEntity: GamesEntity): Item() {
 
@@ -32,12 +32,8 @@ class GamesListAdapter(private val context: Context) : GroupAdapter<ViewHolder>(
                         .load(gamesEntity.image)
                         .centerCrop()
                         .into(viewHolder.itemView.imageViewBackground)
-                viewHolder.itemView.setOnClickListener { onRecyclerViewSelected.onClick(gamesEntity) }
+                viewHolder.itemView.setOnClickListener { onRecyclerViewSelected?.onClick(gamesEntity) }
             }
 
-        }
-
-        fun setOnRecylerViewSelected(listener: OnRecyclerViewSelected) {
-            onRecyclerViewSelected = listener
         }
     }
