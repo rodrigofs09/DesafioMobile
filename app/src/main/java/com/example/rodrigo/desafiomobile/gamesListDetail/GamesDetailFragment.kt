@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.example.rodrigo.desafiomobile.BackButtonListener
 
 import com.example.rodrigo.desafiomobile.R
 import com.example.rodrigo.desafiomobile.config.Config
