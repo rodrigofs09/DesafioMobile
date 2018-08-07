@@ -16,11 +16,4 @@ class MainActivity : AppCompatActivity() {
         tabs_main.setupWithViewPager(viewpager_main)
     }
 
-    private fun setupHomeAsUp() {
-        val shouldShow = 1 < supportFragmentManager.backStackEntryCount
-        supportActionBar?.setDisplayHomeAsUpEnabled(shouldShow)
-    }
-
-    override fun onSupportNavigateUp(): Boolean =
-            supportFragmentManager.popBackStack().run { true }
 }

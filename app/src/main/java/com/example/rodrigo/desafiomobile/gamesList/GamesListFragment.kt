@@ -95,12 +95,13 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
     override fun onClick(gamesEntity: GamesEntity) {
 
         val gamesDetailFragment = GamesDetailFragment()
-        val transaction = childFragmentManager.beginTransaction()
+        val transaction = fragmentManager?.beginTransaction()
+        //val transaction = childFragmentManager.beginTransaction()
 
         newInstance(gamesEntity)
 
-        transaction.addToBackStack(null)
-        transaction.replace(R.id.gamesList, gamesDetailFragment).commit()
+        transaction?.addToBackStack(null)
+        transaction?.add(R.id.gamesList, gamesDetailFragment)?.commit()
 
     }
 
