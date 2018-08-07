@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -40,11 +39,6 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -74,14 +68,10 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
         val frag = childFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerSupportFragment
         frag.initialize(Config.youTubeApiKey, this)
 
-        activity?.supportFragmentManager?.addOnBackStackChangedListener {
-            activity?.title = gamesEntity.name
-        }
     }
 
     override fun onDetach() {
         super.onDetach()
-        listener = null
     }
 
     interface OnFragmentInteractionListener {
@@ -100,14 +90,6 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
         return stringPlatforms.toString()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return if (item?.itemId == android.R.id.home) {
-            activity?.onBackPressed()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onInitializationSuccess(p0: YouTubePlayer.Provider?, p1: YouTubePlayer?, p2: Boolean) {
         p1?.cueVideo(finalUrl)

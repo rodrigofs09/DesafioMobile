@@ -48,14 +48,7 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
-        }
         adapter = GamesListAdapter(context)
-
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -79,9 +72,6 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
         // Presenter atualiza informações da lista
         gamesListPresenter.updateList()
 
-        activity?.supportFragmentManager?.addOnBackStackChangedListener {
-            activity?.title = "Lista de Games"
-        }
     }
 
     override fun onDetach() {
@@ -103,18 +93,15 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
     }
 
     override fun onClick(gamesEntity: GamesEntity) {
-        val transaction = activity?.supportFragmentManager?.beginTransaction()
 
         val gamesDetailFragment = GamesDetailFragment()
+        val transaction = childFragmentManager.beginTransaction()
+
         newInstance(gamesEntity)
 
-        transaction?.add(R.id.fragment_content, gamesDetailFragment)?.addToBackStack(null)?.commit()
+        transaction.addToBackStack(null)
+        transaction.replace(R.id.gamesList, gamesDetailFragment).commit()
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity?.title = "Lista de Games"
     }
 
     override fun showMessage(msg: String){
