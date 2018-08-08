@@ -1,7 +1,7 @@
 package com.example.rodrigo.desafiomobile.gamesList
 
-import com.example.rodrigo.desafiomobile.entity.GamesEntity
+import com.example.rodrigo.desafiomobile.entity.GameEntity
 
 interface OnRecyclerViewSelected {
-    fun onClick(gamesEntity: GamesEntity)
+    fun onClick(gameEntity: GameEntity)
 }
