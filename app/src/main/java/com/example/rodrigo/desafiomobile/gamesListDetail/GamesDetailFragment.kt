@@ -11,8 +11,8 @@ import android.widget.Toast
 
 import com.example.rodrigo.desafiomobile.R
 import com.example.rodrigo.desafiomobile.config.Config
-import com.example.rodrigo.desafiomobile.entity.GamesEntity
-import com.example.rodrigo.desafiomobile.gamesList.GamesListFragment.Companion.GAME_EXTRA_KEY
+import com.example.rodrigo.desafiomobile.entity.GameEntity
+import com.example.rodrigo.desafiomobile.gamesList.GamesListFragment.Companion.gameExtraKey
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
@@ -51,22 +51,30 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val gamesEntity: GamesEntity = activity?.intent?.getSerializableExtra(GamesListFragment.GAME_EXTRA_KEY) as GamesEntity
-        val gamesEntity: GamesEntity = GAME_EXTRA_KEY
+        //val gamesEntity: GameEntity = activity?.intent?.getSerializableExtra(GamesListFragment.gameExtraKey) as GameEntity
+        val gameEntity: GameEntity = gameExtraKey
 
-        text_view_name.text = gamesEntity.name
-        gameDate.text = gamesEntity.releaseDate
+        text_view_name.text = gameEntity.name
+        gameDate.text = gameEntity.releaseDate
 
-        val platforms = textToPlatforms(gamesEntity.platforms)
+        val platforms = textToPlatforms(gameEntity.platforms)
         gamePlatforms.text = platforms
 
-        val url = gamesEntity.trailer
+        val url = gameEntity.trailer
         val urlSemEspaco = url.split("=")
         finalUrl = urlSemEspaco[urlSemEspaco.size - 1]
 
 
         val frag = childFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerSupportFragment
         frag.initialize(Config.youTubeApiKey, this)
+
+    }
+
+    companion object {
+        val className : String = GamesDetailFragment::class.java.simpleName
+        fun newInstance(args: GameEntity): GamesDetailFragment = GamesDetailFragment().apply {
+            gameExtraKey = args
+        }
 
     }
 
@@ -96,4 +104,5 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
     override fun onInitializationFailure(p0: YouTubePlayer.Provider?, p1: YouTubeInitializationResult?) {
         Toast.makeText(context,"Erro ao reproduzir video", Toast.LENGTH_LONG).show()
     }
+
 }

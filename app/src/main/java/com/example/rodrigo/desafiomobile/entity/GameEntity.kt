@@ -2,7 +2,7 @@ package com.example.rodrigo.desafiomobile.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class GamesEntity (
+data class GameEntity (
         @SerializedName("id")
         val id:Int,
 

@@ -12,12 +12,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.example.rodrigo.desafiomobile.R
-import com.example.rodrigo.desafiomobile.entity.GamesEntity
+import com.example.rodrigo.desafiomobile.SceneNavigator
+import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.example.rodrigo.desafiomobile.entity.GamesListEntity
 import com.example.rodrigo.desafiomobile.gamesListDetail.GamesDetailFragment
 
 import kotlinx.android.synthetic.main.custom_progress_bar.*
 import kotlinx.android.synthetic.main.fragment_games_list.*
+import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.Router
+import ru.terrakok.cicerone.commands.Command
+import ru.terrakok.cicerone.commands.Replace
 
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -28,6 +33,25 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
     private val gamesListPresenter: GamesListPresenter = GamesListPresenter(this)
 
     private lateinit var adapter: GamesListAdapter
+
+    private var cicerone: Cicerone<Router> = Cicerone.create()
+
+    private val navigator = object : SceneNavigator(activity, fragmentManager, id) {
+        override fun applyCommands(commands: Array<Command>) {
+            for (command in commands) applyCommand(command)
+        }
+
+        override fun applyCommand(command: Command) {
+            when (command) {
+                is Replace -> {
+                    when (command.screenKey) {
+                        GamesDetailFragment.className -> GamesListFragment()
+                    }
+                }
+            }
+        }
+
+    }
 
     override fun displayGames(gamesListEntity: GamesListEntity) {
         adapter.data = (gamesListEntity)
@@ -85,20 +109,16 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
     }
 
     companion object {
-        lateinit var GAME_EXTRA_KEY : GamesEntity
-        fun newInstance(args: GamesEntity): GamesListFragment = GamesListFragment().apply {
-            GAME_EXTRA_KEY = args
-        }
+        lateinit var gameExtraKey : GameEntity
+        val className : String = GamesListFragment::class.java.simpleName
 
     }
 
-    override fun onClick(gamesEntity: GamesEntity) {
+    override fun onClick(gameEntity: GameEntity) {
 
-        val gamesDetailFragment = GamesDetailFragment()
+        val gamesDetailFragment = GamesDetailFragment.newInstance(gameEntity)
         val transaction = fragmentManager?.beginTransaction()
         //val transaction = childFragmentManager.beginTransaction()
-
-        newInstance(gamesEntity)
 
         transaction?.addToBackStack(null)
         transaction?.add(R.id.gamesList, gamesDetailFragment)?.commit()
