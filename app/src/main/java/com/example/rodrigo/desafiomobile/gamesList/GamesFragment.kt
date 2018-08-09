@@ -1,37 +1,22 @@
 package com.example.rodrigo.desafiomobile.gamesList
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.example.rodrigo.desafiomobile.R
+import com.example.rodrigo.desafiomobile.RouterProvider
 import com.example.rodrigo.desafiomobile.SceneNavigator
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-class GamesFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
+class GamesFragment : Fragment(), RouterProvider {
 
     var cicerone: Cicerone<Router> = Cicerone.create()
 
-    var navigator: SceneNavigator = SceneNavigator(activity as FragmentActivity, childFragmentManager, R.id.sceneContainer)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    lateinit var navigator: SceneNavigator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -39,16 +24,29 @@ class GamesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_games, container, false)
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navigator = SceneNavigator(activity, childFragmentManager, R.id.sceneContainer)
+
+    }
+    override fun onResume() {
+        super.onResume()
+        cicerone.navigatorHolder.setNavigator(navigator)
     }
 
-    override fun onDetach() {
-        super.onDetach()
+    override fun onPause() {
+        cicerone.navigatorHolder.removeNavigator()
+        super.onPause()
     }
 
-    companion object {
-        val className : String = GamesFragment::class.java.simpleName
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        if (childFragmentManager.findFragmentById(R.id.sceneContainer) == null)
+            cicerone.router.replaceScreen(GamesListFragment.className, 1)
     }
+
+    override fun getRouter(): Router{
+        return cicerone.router}
 
 }

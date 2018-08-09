@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.example.rodrigo.desafiomobile.R
 import com.example.rodrigo.desafiomobile.config.Config
 import com.example.rodrigo.desafiomobile.entity.GameEntity
-import com.example.rodrigo.desafiomobile.gamesList.GamesListFragment.Companion.gameExtraKey
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
@@ -19,6 +18,8 @@ import kotlinx.android.synthetic.main.fragment_games_detail.*
 class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
     private lateinit var finalUrl: String
+
+    private lateinit var gameEntity: GameEntity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -29,9 +30,6 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //val gamesEntity: GameEntity = activity?.intent?.getSerializableExtra(GamesListFragment.gameExtraKey) as GameEntity
-        val gameEntity: GameEntity = gameExtraKey
 
         text_view_name.text = gameEntity.name
         gameDate.text = gameEntity.releaseDate
@@ -51,11 +49,9 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
     companion object {
         val className : String = GamesDetailFragment::class.java.simpleName
-        fun newInstance(args: GameEntity): GamesDetailFragment = GamesDetailFragment().apply {
-            gameExtraKey = args
-        }
-
+        fun newInstance(gameEntity: GameEntity): GamesDetailFragment = GamesDetailFragment().apply { gameEntity.let{this.gameEntity = it }}
     }
+
 
     private fun textToPlatforms(platforms: List<String>): String{
         var stringPlatforms = StringBuilder()
