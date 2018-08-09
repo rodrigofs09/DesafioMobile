@@ -1,7 +1,5 @@
 package com.example.rodrigo.desafiomobile.gamesListDetail
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -12,34 +10,16 @@ import android.widget.Toast
 import com.example.rodrigo.desafiomobile.R
 import com.example.rodrigo.desafiomobile.config.Config
 import com.example.rodrigo.desafiomobile.entity.GameEntity
-import com.example.rodrigo.desafiomobile.gamesList.GamesListFragment.Companion.gameExtraKey
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import kotlinx.android.synthetic.main.fragment_games_detail.*
 
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
-    private var param1: String? = null
-    private var param2: String? = null
-    private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var finalUrl: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
+    private lateinit var gameEntity: GameEntity
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -50,9 +30,6 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //val gamesEntity: GameEntity = activity?.intent?.getSerializableExtra(GamesListFragment.gameExtraKey) as GameEntity
-        val gameEntity: GameEntity = gameExtraKey
 
         text_view_name.text = gameEntity.name
         gameDate.text = gameEntity.releaseDate
@@ -72,20 +49,9 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
 
     companion object {
         val className : String = GamesDetailFragment::class.java.simpleName
-        fun newInstance(args: GameEntity): GamesDetailFragment = GamesDetailFragment().apply {
-            gameExtraKey = args
-        }
-
+        fun newInstance(gameEntity: GameEntity): GamesDetailFragment = GamesDetailFragment().apply { gameEntity.let{this.gameEntity = it }}
     }
 
-    override fun onDetach() {
-        super.onDetach()
-    }
-
-    interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onFragmentInteraction(uri: Uri)
-    }
 
     private fun textToPlatforms(platforms: List<String>): String{
         var stringPlatforms = StringBuilder()
