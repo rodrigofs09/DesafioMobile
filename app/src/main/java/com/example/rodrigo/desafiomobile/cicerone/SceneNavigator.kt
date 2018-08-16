@@ -5,7 +5,7 @@ import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
-import com.example.rodrigo.desafiomobile.model.GameEntity
+import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.example.rodrigo.desafiomobile.gamesList.GamesListFragment
 import com.example.rodrigo.desafiomobile.gamesDetail.GamesDetailFragment
 import ru.terrakok.cicerone.android.SupportAppNavigator

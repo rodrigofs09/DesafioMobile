@@ -11,9 +11,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.example.rodrigo.desafiomobile.R
+import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
 import com.example.rodrigo.desafiomobile.cicerone.RouterProvider
-import com.example.rodrigo.desafiomobile.model.GameEntity
-import com.example.rodrigo.desafiomobile.model.GamesListEntity
+import com.example.rodrigo.desafiomobile.entity.GameEntity
+import com.example.rodrigo.desafiomobile.entity.GamesListEntity
 import com.example.rodrigo.desafiomobile.gamesDetail.GamesDetailFragment
 
 import kotlinx.android.synthetic.main.custom_progress_bar.*
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_games_list.*
 import ru.terrakok.cicerone.Router
 
 class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
-z
+
     private val gamesListPresenter: GamesListPresenter = GamesListPresenter(this)
 
     private lateinit var adapter: GamesListAdapter
@@ -64,7 +65,6 @@ z
 
     companion object {
         val className : String = GamesListFragment::class.java.simpleName
-
     }
 
     override fun onClick(gameEntity: GameEntity) {
@@ -73,7 +73,6 @@ z
 
     override fun showMessage(msg: String){
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()}
-    override fun showLoading(){linear_layout_loading.visibility = View.VISIBLE}
-    override fun hideLoading(){linear_layout_loading.visibility = View.GONE }
-
+    override fun showLoading(){linear_layout_loading?.visibility = View.VISIBLE}
+    override fun hideLoading(){linear_layout_loading?.visibility = View.GONE }
 }

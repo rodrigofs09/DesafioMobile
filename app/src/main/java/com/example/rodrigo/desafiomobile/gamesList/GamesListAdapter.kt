@@ -5,8 +5,8 @@ import android.content.Context
 import com.bumptech.glide.Glide
 
 import com.example.rodrigo.desafiomobile.R.layout.games_item_list
-import com.example.rodrigo.desafiomobile.model.GameEntity
-import com.example.rodrigo.desafiomobile.model.GamesListEntity
+import com.example.rodrigo.desafiomobile.entity.GameEntity
+import com.example.rodrigo.desafiomobile.entity.GamesListEntity
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.Item
 import com.xwray.groupie.kotlinandroidextensions.ViewHolder
