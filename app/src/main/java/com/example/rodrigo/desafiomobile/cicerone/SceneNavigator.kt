@@ -1,4 +1,4 @@
-package com.example.rodrigo.desafiomobile
+package com.example.rodrigo.desafiomobile.cicerone
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.example.rodrigo.desafiomobile.gamesList.GamesListFragment
-import com.example.rodrigo.desafiomobile.gamesListDetail.GamesDetailFragment
+import com.example.rodrigo.desafiomobile.gamesDetail.GamesDetailFragment
 import ru.terrakok.cicerone.android.SupportAppNavigator
 
 open class SceneNavigator(fragmentActivity: FragmentActivity?, fm: FragmentManager?, containerId: Int) : SupportAppNavigator(fragmentActivity, fm, containerId) {

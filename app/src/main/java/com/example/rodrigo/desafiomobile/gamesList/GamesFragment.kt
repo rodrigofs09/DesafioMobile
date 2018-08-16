@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.rodrigo.desafiomobile.R
-import com.example.rodrigo.desafiomobile.RouterProvider
-import com.example.rodrigo.desafiomobile.SceneNavigator
+import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
+import com.example.rodrigo.desafiomobile.cicerone.RouterProvider
+import com.example.rodrigo.desafiomobile.cicerone.SceneNavigator
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 
-class GamesFragment : Fragment(), RouterProvider {
+open class GamesFragment : Fragment(), RouterProvider, BackButtonListener {
 
     var cicerone: Cicerone<Router> = Cicerone.create()
 
@@ -49,4 +50,9 @@ class GamesFragment : Fragment(), RouterProvider {
     override fun getRouter(): Router{
         return cicerone.router}
 
+    override fun onBackPressed(): Boolean {
+        val childFragment = childFragmentManager.findFragmentById(R.id.sceneContainer)
+        return childFragment != null && childFragment is BackButtonListener && childFragment.onBackPressed()
+
+    }
 }

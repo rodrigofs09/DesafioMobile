@@ -5,23 +5,24 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
 import com.example.rodrigo.desafiomobile.gamesList.GamesFragment
-import com.example.rodrigo.desafiomobile.gamesListDetail.VazioFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
     private val gamesFragment: GamesFragment by lazy { GamesFragment() }
-    private val vazioFragment: VazioFragment by lazy { VazioFragment() }
+    private val secondFragment: GamesFragment by lazy { GamesFragment() }
+    private val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
-        viewpager_main.adapter = fragmentAdapter
 
-        tabs_main.setupWithViewPager(viewpager_main)
+        viewpagerMain.adapter = fragmentAdapter
+
+        tabs_main.setupWithViewPager(viewpagerMain)
 
     }
 
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     gamesFragment
                 }
                 else -> {
-                    return vazioFragment
+                    return secondFragment
                 }
             }
         }
@@ -45,9 +46,18 @@ class MainActivity : AppCompatActivity() {
             return when (position) {
                 0 -> "Lista de games"
                 else -> {
-                    return "Vazio"
+                    return "Games"
                 }
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        val fragment = fragmentAdapter.getItem( viewpagerMain.currentItem )
+        if (fragment is BackButtonListener && fragment.onBackPressed()) {
+
+        } else {
+            finish()
         }
     }
 

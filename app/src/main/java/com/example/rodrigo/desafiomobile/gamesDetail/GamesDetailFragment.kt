@@ -1,4 +1,4 @@
-package com.example.rodrigo.desafiomobile.gamesListDetail
+package com.example.rodrigo.desafiomobile.gamesDetail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,20 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
 
 import com.example.rodrigo.desafiomobile.R
+import com.example.rodrigo.desafiomobile.cicerone.RouterProvider
 import com.example.rodrigo.desafiomobile.config.Config
 import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import kotlinx.android.synthetic.main.fragment_games_detail.*
+import ru.terrakok.cicerone.Router
 
-class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
+class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, BackButtonListener {
 
     private lateinit var finalUrl: String
 
     private lateinit var gameEntity: GameEntity
+
+    private lateinit var router: Router
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -31,6 +36,8 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        router = (parentFragment as RouterProvider).getRouter()
+
         text_view_name.text = gameEntity.name
         gameDate.text = gameEntity.releaseDate
 
@@ -40,7 +47,6 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
         val url = gameEntity.trailer
         val urlSemEspaco = url.split("=")
         finalUrl = urlSemEspaco[urlSemEspaco.size - 1]
-
 
         val frag = childFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerSupportFragment
         frag.initialize(Config.youTubeApiKey, this)
@@ -71,4 +77,9 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
         Toast.makeText(context,"Erro ao reproduzir video", Toast.LENGTH_LONG).show()
     }
 
+    override fun onBackPressed(): Boolean {
+        router.exit()
+
+        return true
+    }
 }
