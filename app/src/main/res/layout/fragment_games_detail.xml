@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".gamesListDetail.GamesDetailFragment"
-    android:background="@color/cloud_burst">
+    tools:context=".gamesDetail.GamesDetailFragment"
+    android:background="@color/cloud_burst"
+    android:id="@+id/gamesDetail">
 
     <fragment
         android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"

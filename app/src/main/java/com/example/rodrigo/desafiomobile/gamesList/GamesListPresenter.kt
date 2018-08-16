@@ -1,6 +1,6 @@
 package com.example.rodrigo.desafiomobile.gamesList
 
-import com.example.rodrigo.desafiomobile.entity.GamesListEntity
+import com.example.rodrigo.desafiomobile.model.GamesListEntity
 import com.example.rodrigo.desafiomobile.network.api.GamesApi
 import retrofit2.Call
 import retrofit2.Callback

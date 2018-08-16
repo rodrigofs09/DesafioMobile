@@ -1,4 +1,4 @@
-package com.example.rodrigo.desafiomobile.gamesListDetail
+package com.example.rodrigo.desafiomobile.gamesDetail
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
 
 import com.example.rodrigo.desafiomobile.R
 import com.example.rodrigo.desafiomobile.config.Config
-import com.example.rodrigo.desafiomobile.entity.GameEntity
+import com.example.rodrigo.desafiomobile.model.GameEntity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import kotlinx.android.synthetic.main.fragment_games_detail.*
 
-class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
+class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, BackButtonListener {
 
     private lateinit var finalUrl: String
 
@@ -71,4 +72,15 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener {
         Toast.makeText(context,"Erro ao reproduzir video", Toast.LENGTH_LONG).show()
     }
 
+    override fun onBackPressed(): Boolean {
+        val childFragment = childFragmentManager.findFragmentById(R.id.gamesDetail)
+        return if (childFragment != null && childFragment is BackButtonListener && childFragment.onBackPressed()) {
+            childFragmentManager.popBackStack()
+            true
+        } else {
+            if (isAdded)
+                activity?.finish()
+            true
+        }
+    }
 }

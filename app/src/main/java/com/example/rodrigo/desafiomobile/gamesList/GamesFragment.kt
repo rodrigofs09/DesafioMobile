@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.rodrigo.desafiomobile.R
-import com.example.rodrigo.desafiomobile.RouterProvider
-import com.example.rodrigo.desafiomobile.SceneNavigator
+import com.example.rodrigo.desafiomobile.cicerone.RouterProvider
+import com.example.rodrigo.desafiomobile.cicerone.SceneNavigator
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Router
 
