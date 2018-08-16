@@ -53,6 +53,31 @@ open class GamesFragment : Fragment(), RouterProvider, BackButtonListener {
     override fun onBackPressed(): Boolean {
         val childFragment = childFragmentManager.findFragmentById(R.id.sceneContainer)
         return childFragment != null && childFragment is BackButtonListener && childFragment.onBackPressed()
+    }
 
+    class MainFragment: GamesFragment(){
+
+        companion object {
+            val className: String = MainFragment::class.java.simpleName
+        }
+
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            if(childFragmentManager.findFragmentById(R.id.sceneContainer) == null)
+                cicerone.router.replaceScreen(GamesListFragment.className, 1)
+        }
+    }
+
+    class SecondFragment: GamesFragment(){
+
+        companion object {
+            val className: String = SecondFragment::class.java.simpleName
+        }
+
+        override fun onActivityCreated(savedInstanceState: Bundle?) {
+            super.onActivityCreated(savedInstanceState)
+            if(childFragmentManager.findFragmentById(R.id.sceneContainer) == null)
+                cicerone.router.replaceScreen(GamesListFragment.className, 1)
+        }
     }
 }
