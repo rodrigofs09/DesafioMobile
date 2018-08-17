@@ -2,63 +2,103 @@ package com.example.rodrigo.desafiomobile
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import android.widget.Toast
 import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
 import com.example.rodrigo.desafiomobile.gamesList.GamesFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.Navigator
+import ru.terrakok.cicerone.commands.Back
+import ru.terrakok.cicerone.commands.Command
+import ru.terrakok.cicerone.commands.Replace
+import ru.terrakok.cicerone.commands.SystemMessage
 
 class MainActivity : AppCompatActivity() {
 
-    private val gamesFragment: GamesFragment by lazy { GamesFragment() }
-    private val secondFragment: GamesFragment by lazy { GamesFragment() }
-    private val fragmentAdapter = MyPagerAdapter(supportFragmentManager)
+    private val gamesFragment: GamesFragment.MainFragment by lazy { GamesFragment.MainFragment().apply { addFragment(this) } }
+    private val secondFragment: GamesFragment.SecondFragment by lazy { GamesFragment.SecondFragment().apply { addFragment(this) } }
+
+    private val mainCicerone = Cicerone.create()
+
+    private val fragmentNames: Array<String> = arrayOf(GamesFragment.MainFragment.className, GamesFragment.SecondFragment.className)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        configureNavigationBar()
 
-        viewpagerMain.adapter = fragmentAdapter
-
-        tabs_main.setupWithViewPager(viewpagerMain)
+        if (savedInstanceState == null) {
+            bottomNavigationView.selectedItemId = R.id.navigation_home
+        }
 
     }
 
-    inner class MyPagerAdapter(fm: FragmentManager): FragmentStatePagerAdapter(fm){
-        override fun getItem(position: Int): Fragment {
-            return when (position) {
-                0 -> {
-                    gamesFragment
-                }
-                else -> {
-                    return secondFragment
-                }
+    private fun configureNavigationBar() {
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> mainCicerone.router.replaceScreen(GamesFragment.MainFragment.className) //envia comandos para o navigator
+                R.id.navigation_dashboard -> mainCicerone.router.replaceScreen(GamesFragment.SecondFragment.className)
             }
+            true
+        }
+    }
+
+    private fun addFragment(fragment: GamesFragment) {
+        supportFragmentManager.beginTransaction()
+                .add(R.id.flowContainer, fragment, fragment.javaClass.simpleName)
+                .detach(fragment)
+                .commitNow()
+    }
+
+    private val navigator = object : Navigator {
+        override fun applyCommands(commands: Array<Command>) {
+            for(command in commands) applyCommand(command)
         }
 
-        override fun getCount(): Int {
-            return 2
-        }
-
-        override fun getPageTitle(position: Int): CharSequence {
-            return when (position) {
-                0 -> "Lista de games"
-                else -> {
-                    return "Games"
+        private fun applyCommand(command: Command) {
+            when(command){
+                is Back -> finish()
+                is SystemMessage -> Toast.makeText(this@MainActivity, command.message, Toast.LENGTH_SHORT).show()
+                is Replace -> {
+                    when(command.screenKey){
+                        GamesFragment.MainFragment.className -> changeTab(gamesFragment)
+                        GamesFragment.SecondFragment.className -> changeTab(secondFragment)
+                    }
                 }
             }
+
         }
+
+        private fun changeTab(targetFragment: GamesFragment){
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+
+            fragmentNames.forEach {
+                val fragment = supportFragmentManager.findFragmentByTag(it)
+                if(fragment != null && !fragment.isDetached && fragment != targetFragment){
+                    fragmentTransaction.detach(fragment)
+                }
+            }
+            fragmentTransaction.attach(targetFragment).commitNow()
+        }
+
+    }
+
+    override fun onResumeFragments() {
+        super.onResumeFragments()
+        mainCicerone.navigatorHolder.setNavigator(navigator)
+    }
+
+    override fun onPause() {
+        mainCicerone.navigatorHolder.removeNavigator()
+        super.onPause()
     }
 
     override fun onBackPressed() {
-        val fragment = fragmentAdapter.getItem( viewpagerMain.currentItem )
-        if (fragment is BackButtonListener && fragment.onBackPressed()) {
-
-        } else {
+        val fragment = supportFragmentManager.findFragmentById(R.id.flowContainer)
+        if(fragment != null && fragment is BackButtonListener && fragment.onBackPressed()){}
+        else {
             finish()
         }
     }
-
 }
