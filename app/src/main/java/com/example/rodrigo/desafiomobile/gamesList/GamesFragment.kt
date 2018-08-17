@@ -64,7 +64,7 @@ open class GamesFragment : Fragment(), RouterProvider, BackButtonListener {
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
             if(childFragmentManager.findFragmentById(R.id.sceneContainer) == null)
-                cicerone.router.replaceScreen(GamesListFragment.className)
+                cicerone.router.replaceScreen(GamesListFragment.className, 1)
         }
     }
 
@@ -77,7 +77,7 @@ open class GamesFragment : Fragment(), RouterProvider, BackButtonListener {
         override fun onActivityCreated(savedInstanceState: Bundle?) {
             super.onActivityCreated(savedInstanceState)
             if(childFragmentManager.findFragmentById(R.id.sceneContainer) == null)
-                cicerone.router.replaceScreen(GamesListFragment.className)
+                cicerone.router.replaceScreen(GamesListFragment.className, 1)
         }
     }
 }
