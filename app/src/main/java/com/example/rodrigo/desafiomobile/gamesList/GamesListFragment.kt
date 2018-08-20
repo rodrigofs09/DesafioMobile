@@ -26,11 +26,21 @@ import javax.inject.Inject
 
 class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
 
-    private val gamesListPresenter: GamesListPresenter = GamesListPresenter(this)
+    @Inject
+    lateinit var gamesListPresenter: GamesListPresenter
 
     private lateinit var adapter: GamesListAdapter
 
     private lateinit var router: Router
+
+    private val component: GamesListComponent? by lazy {
+        context?.let {
+            DaggerGamesListComponent.builder()
+                    .flowComponent( (parentFragment as GamesFragment).component)
+                    .gamesListModule(GamesListModule(this, it))
+                    .build()
+        }
+    }
 
     override fun displayGames(gamesListEntity: GamesListEntity) {
         adapter.data = (gamesListEntity)
@@ -38,6 +48,7 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        component?.inject(this)
         adapter = GamesListAdapter(context)
     }
 

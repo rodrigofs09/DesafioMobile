@@ -25,7 +25,7 @@ open class GamesFragment : Fragment(), RouterProvider, BackButtonListener {
     @Inject
     lateinit var navigator: SceneNavigator
 
-    private val component: FlowComponent? by lazy {
+    val component: FlowComponent? by lazy {
         context?.let {
             DaggerFlowComponent.builder()
                     .applicationComponent(MainActivity.daggerComponent)
