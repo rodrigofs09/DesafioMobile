@@ -9,13 +9,14 @@ import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.example.rodrigo.desafiomobile.gamesList.GamesListFragment
 import com.example.rodrigo.desafiomobile.gamesDetail.GamesDetailFragment
 import ru.terrakok.cicerone.android.SupportAppNavigator
+import javax.inject.Inject
 
-open class SceneNavigator(fragmentActivity: FragmentActivity?, fm: FragmentManager?, containerId: Int) : SupportAppNavigator(fragmentActivity, fm, containerId) {
-    override fun createActivityIntent(context: Context?, screenKey: String?, data: Any?): Intent? {
+class SceneNavigator @Inject constructor(fragmentActivity: FragmentActivity, fm: FragmentManager, containerId: Int) : SupportAppNavigator(fragmentActivity, fm, containerId) {
+    override fun createActivityIntent(context: Context, screenKey: String, data: Any?): Intent? {
         return null
     }
 
-    override fun createFragment(screenKey: String?, gameEntity: Any): Fragment? {
+    override fun createFragment(screenKey: String?, gameEntity: Any?): Fragment? {
         return when (screenKey){
             GamesListFragment.className -> return GamesListFragment()
             GamesDetailFragment.className -> {

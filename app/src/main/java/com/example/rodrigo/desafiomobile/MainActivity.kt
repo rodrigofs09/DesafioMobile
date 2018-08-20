@@ -4,7 +4,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
-import com.example.rodrigo.desafiomobile.gamesList.GamesFragment
+import com.example.rodrigo.desafiomobile.dagger.ApplicationComponent
+import com.example.rodrigo.desafiomobile.dagger.ApplicationModule
+import com.example.rodrigo.desafiomobile.dagger.DaggerApplicationComponent
+import com.example.rodrigo.desafiomobile.gamesFragment.GamesFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.Navigator
@@ -22,9 +25,17 @@ class MainActivity : AppCompatActivity() {
 
     private val fragmentNames: Array<String> = arrayOf(GamesFragment.MainFragment.className, GamesFragment.SecondFragment.className)
 
+    companion object {
+        lateinit var daggerComponent: ApplicationComponent
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        daggerComponent = DaggerApplicationComponent.builder()
+                .applicationModule(ApplicationModule(applicationContext))
+                .build()
 
         configureNavigationBar()
 

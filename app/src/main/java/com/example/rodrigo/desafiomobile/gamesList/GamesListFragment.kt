@@ -16,10 +16,13 @@ import com.example.rodrigo.desafiomobile.cicerone.RouterProvider
 import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.example.rodrigo.desafiomobile.entity.GamesListEntity
 import com.example.rodrigo.desafiomobile.gamesDetail.GamesDetailFragment
+import com.example.rodrigo.desafiomobile.gamesFragment.DaggerFlowComponent
+import com.example.rodrigo.desafiomobile.gamesFragment.GamesFragment
 
 import kotlinx.android.synthetic.main.custom_progress_bar.*
 import kotlinx.android.synthetic.main.fragment_games_list.*
 import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
 
