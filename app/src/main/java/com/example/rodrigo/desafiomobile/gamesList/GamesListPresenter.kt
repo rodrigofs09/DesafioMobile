@@ -5,8 +5,9 @@ import com.example.rodrigo.desafiomobile.network.api.GamesApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class GamesListPresenter (private val gamesListView: GamesListView) {
+class GamesListPresenter @Inject constructor(private val gamesListView: GamesListView) {
 
     fun updateList() {
         gamesListView.showLoading()
