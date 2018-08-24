@@ -9,15 +9,15 @@
 
     <fragment
         android:name="com.google.android.youtube.player.YouTubePlayerSupportFragment"
-        android:id="@+id/youtube_fragment"
+        android:id="@+id/youtubeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <TextView
-        android:id="@+id/text_view_name"
+        android:id="@+id/textViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/youtube_fragment"
+        android:layout_below="@+id/youtubeFragment"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="15dp"
@@ -31,7 +31,7 @@
         android:id="@+id/gameDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_view_name"
+        android:layout_below="@+id/textViewName"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="15dp"

@@ -11,12 +11,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.example.rodrigo.desafiomobile.R
-import com.example.rodrigo.desafiomobile.cicerone.BackButtonListener
 import com.example.rodrigo.desafiomobile.cicerone.RouterProvider
 import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.example.rodrigo.desafiomobile.entity.GamesListEntity
 import com.example.rodrigo.desafiomobile.gamesDetail.GamesDetailFragment
-import com.example.rodrigo.desafiomobile.gamesFragment.DaggerFlowComponent
 import com.example.rodrigo.desafiomobile.gamesFragment.GamesFragment
 
 import kotlinx.android.synthetic.main.custom_progress_bar.*
@@ -87,6 +85,6 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
 
     override fun showMessage(msg: String){
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show()}
-    override fun showLoading(){linear_layout_loading?.visibility = View.VISIBLE}
-    override fun hideLoading(){linear_layout_loading?.visibility = View.GONE }
+    override fun showLoading(){linearLayoutLoading?.visibility = View.VISIBLE}
+    override fun hideLoading(){linearLayoutLoading?.visibility = View.GONE }
 }
