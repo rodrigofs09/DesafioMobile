@@ -38,7 +38,7 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, Bac
 
         router = (parentFragment as RouterProvider).getRouter()
 
-        text_view_name.text = gameEntity.name
+        textViewName.text = gameEntity.name
         gameDate.text = gameEntity.releaseDate
 
         val platforms = textToPlatforms(gameEntity.platforms)
@@ -48,7 +48,7 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, Bac
         val urlSemEspaco = url.split("=")
         finalUrl = urlSemEspaco[urlSemEspaco.size - 1]
 
-        val frag = childFragmentManager.findFragmentById(R.id.youtube_fragment) as YouTubePlayerSupportFragment
+        val frag = childFragmentManager.findFragmentById(R.id.youtubeFragment) as YouTubePlayerSupportFragment
         frag.initialize(Config.youTubeApiKey, this)
 
     }
