@@ -20,5 +20,8 @@ class FlowModule(private val fragmentActivity: FragmentActivity, private val fm:
     @PerFlow
     fun provideNavigator(): SceneNavigator = SceneNavigator(fragmentActivity, fm, containerId)
 
+    @Provides
+    @PerFlow
+    fun provideRouter(cicerone: Cicerone<Router>): Router = cicerone.router
 }
 

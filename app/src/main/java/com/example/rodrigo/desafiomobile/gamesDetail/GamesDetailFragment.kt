@@ -17,6 +17,7 @@ import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
 import kotlinx.android.synthetic.main.fragment_games_detail.*
 import ru.terrakok.cicerone.Router
+import javax.inject.Inject
 
 class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, BackButtonListener {
 
@@ -24,7 +25,8 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, Bac
 
     private lateinit var gameEntity: GameEntity
 
-    private lateinit var router: Router
+    @Inject
+    lateinit var router: Router
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -35,8 +37,6 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, Bac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        router = (parentFragment as RouterProvider).getRouter()
 
         textViewName.text = gameEntity.name
         gameDate.text = gameEntity.releaseDate

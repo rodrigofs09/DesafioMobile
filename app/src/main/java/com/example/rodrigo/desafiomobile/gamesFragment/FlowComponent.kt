@@ -11,4 +11,5 @@ import ru.terrakok.cicerone.Router
 interface FlowComponent: ApplicationComponent {
     fun inject(gamesFragment: GamesFragment)
     fun provideCicerone(): Cicerone<Router>
+    fun provideRouter(): Router
 }

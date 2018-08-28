@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import com.example.rodrigo.desafiomobile.R
-import com.example.rodrigo.desafiomobile.cicerone.RouterProvider
-import com.example.rodrigo.desafiomobile.entity.GameEntity
 import com.example.rodrigo.desafiomobile.entity.GamesListEntity
 import com.example.rodrigo.desafiomobile.gamesDetail.GamesDetailFragment
 import com.example.rodrigo.desafiomobile.gamesFragment.GamesFragment
@@ -22,14 +20,15 @@ import kotlinx.android.synthetic.main.fragment_games_list.*
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
-class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
+class GamesListFragment : Fragment(), GamesListView {
 
     @Inject
     lateinit var gamesListPresenter: GamesListPresenter
 
     private lateinit var adapter: GamesListAdapter
 
-    private lateinit var router: Router
+    @Inject
+    lateinit var router: Router
 
     private val component: GamesListComponent? by lazy {
         context?.let {
@@ -60,27 +59,22 @@ class GamesListFragment : Fragment(), GamesListView, OnRecyclerViewSelected {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        router = (parentFragment as RouterProvider).getRouter()
-
         activity?.title = "Lista de Games"
 
         // Coloca o adapter na Recycler View
         rvGames.adapter = adapter
         rvGames.layoutManager = LinearLayoutManager(context)
         rvGames.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        adapter.onRecyclerViewSelected = (this)
+        adapter.onItemSelected.subscribe {
+            router.navigateTo(GamesDetailFragment.className, it)
+        }
 
-        // Presenter atualiza informações da lista
         gamesListPresenter.updateList()
 
     }
 
     companion object {
         val className : String = GamesListFragment::class.java.simpleName
-    }
-
-    override fun onClick(gameEntity: GameEntity) {
-        router.navigateTo(GamesDetailFragment.className, gameEntity)
     }
 
     override fun showMessage(msg: String){
