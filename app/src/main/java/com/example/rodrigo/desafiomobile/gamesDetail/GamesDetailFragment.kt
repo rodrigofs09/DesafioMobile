@@ -38,6 +38,8 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, Bac
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        router = (parentFragment as RouterProvider).getRouter()
+
         textViewName.text = gameEntity.name
         gameDate.text = gameEntity.releaseDate
 
@@ -79,7 +81,6 @@ class GamesDetailFragment : Fragment(), YouTubePlayer.OnInitializedListener, Bac
 
     override fun onBackPressed(): Boolean {
         router.exit()
-
         return true
     }
 }
